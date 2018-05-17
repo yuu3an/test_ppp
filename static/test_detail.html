@@ -1,0 +1,20 @@
+{% load rest_framework %}
+
+<html><body>
+
+<h1>book - {{ book.name }}</h1>
+
+<form action="{% url 'test-detail' pk=book.pk %}" method="POST">
+    """
+    POST フォーム(データを改ざんされる恐れのある) を作成しているので、
+    クロス サイトリクエストフォージェリを心配する必要があります。
+    ありがたいことに、 Django がこれに対応するとても使いやすい仕組みを提供してくれているので、
+    あまり心配する必要はありません。手短に言うと、自サイト内を URL に指定した POST フォームには全て、
+    {% csrf_token %} テンプレートタグを使うべきです。
+    """
+    {% csrf_token %}
+    {% render_form serializer %}
+    <input type="submit" value="Save">
+</form>
+
+</body></html>
