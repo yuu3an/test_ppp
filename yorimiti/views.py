@@ -1,17 +1,13 @@
 from __future__ import unicode_literals
-
 from django.template.response import TemplateResponse
-
 from rest_framework_mongoengine.viewsets import ModelViewSet as MongoModelViewSet
-
-from app.serializers import *
-from app.models import Tool, Book, Author, Movie
+from yorimiti.serializers import *
+from yorimiti.models import Tool, M_Category, T_User_Category
 
 
 def index_view(request):
     context = {}
     return TemplateResponse(request, 'index.html', context)
-
 
 class ToolViewSet(MongoModelViewSet):
     """
@@ -24,25 +20,39 @@ class ToolViewSet(MongoModelViewSet):
     def get_queryset(self):
         return Tool.objects.all()
 
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
+from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.views import APIView
 
-class BookViewSet(MongoModelViewSet):
+
+# トップページを表示させる際に使用する
+class top_view(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'yorimiti_test.html'
+
+    def get(self, request):
+        m_category = M_Category.objects.all()
+        serializer = MCategorySerializer(m_category)
+        return Response({'serializer': serializer, 'm_category': m_category})
+
+class MCategoryViewSet(MongoModelViewSet):
     lookup_field = 'id'
-    serializer_class = BookSerializer
+    serializer_class = MCategorySerializer
 
     def get_queryset(self):
-        return Book.objects.all()
+        return M_Category.objects.all()
 
-
-class AuthorViewSet(MongoModelViewSet):
+class TUserCategoryViewSet(MongoModelViewSet):
     lookup_field = 'id'
-    serializer_class = AuthorSerializer
+    serializer_class = TUserCategorySerializer
 
     def get_queryset(self):
-        return Author.objects.all()
+        return T_User_Category.objects.all()
 
-class MovieViewSet(MongoModelViewSet):
-    lookup_field = 'id'
-    serializer_class = MovieSerializer
+class YorimitiViewSet(MongoModelViewSet):
+    lookup_field = 'sub_category_name'
+    serializer_class = MCategorySerializer
 
     def get_queryset(self):
-        return Movie.objects.all()
+        return M_Category.objects.all()

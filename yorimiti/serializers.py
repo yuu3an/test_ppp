@@ -1,29 +1,21 @@
 from rest_framework import serializers
 from rest_framework_mongoengine import serializers as mongoserializers
 
-from app.models import Tool, Author, Book, Movie
+from yorimiti.models import Tool, M_Category, T_User_Category
 
 
 class ToolSerializer(mongoserializers.DocumentSerializer):
     id = serializers.CharField(read_only=False)
-
     class Meta:
         model = Tool
         fields = '__all__'
 
-
-class AuthorSerializer(mongoserializers.DocumentSerializer):
+class MCategorySerializer(mongoserializers.DocumentSerializer):
     class Meta:
-        model = Author
+        model = M_Category
         fields = '__all__'
 
-
-class BookSerializer(mongoserializers.DocumentSerializer):
+class TUserCategorySerializer(mongoserializers.DocumentSerializer):
     class Meta:
-        model = Book
-        fields = '__all__'
-
-class MovieSerializer(mongoserializers.DocumentSerializer):
-    class Meta:
-        model = Movie
+        model = T_User_Category
         fields = '__all__'

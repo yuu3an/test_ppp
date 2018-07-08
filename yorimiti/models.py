@@ -1,19 +1,18 @@
 from mongoengine import Document, EmbeddedDocument, fields
 
+class M_Category(Document):
+    id = fields.StringField(required=True)
+    category_id = fields.StringField(required=True)
+    category_name = fields.StringField(required=True)
+    sub_category_id = fields.StringField(required=True)
+    sub_category_name = fields.StringField(required=True)
 
-class Author(Document):
-    name = fields.StringField()
-
-
-class Book(Document):
-    name = fields.StringField()
-    author = fields.ReferenceField(Author, dbref=True)
-
-
-class Movie(Document):
-    title = fields.StringField()
-    person = fields.ListField()
-
+class T_User_Category(Document):
+    id = fields.StringField(required=True)
+    user_id = fields.StringField(required=True)
+    category_id = fields.StringField(required=True)
+    sub_category_id = fields.StringField(required=True)
+    entry_date = fields.DateTimeField(required=True)
 
 class ToolInput(EmbeddedDocument):
     id = fields.StringField(required=True)
