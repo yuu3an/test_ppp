@@ -3,9 +3,8 @@ from django.conf.urls.static import static
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from app.views import *
 from users.views import *
-from trying.views import *
+from yorimiti.views import *
 
 from project.routers import HybridRouter
 
@@ -15,11 +14,9 @@ router = HybridRouter()
 
 # app views and viewsets
 router.register(r'tool', ToolViewSet, r"tool")
-router.register(r'author', AuthorViewSet, r"author")
-router.register(r'book', BookViewSet, r"book")
 router.register(r'user', UserViewSet, r"user")
-router.add_api_view(r'auth', url(r'^auth/$', ObtainAuthToken.as_view(), name=r"auth"))
-
+router.register(r'M_Category', MCategoryViewSet, r"M_Category")
+router.register(r'T_User_Category', TUserCategoryViewSet, r"T_User_Category")
 
 urlpatterns = [
     # default django admin interface (currently unused)
@@ -31,11 +28,11 @@ urlpatterns = [
     # index page should be served by django to set cookies, headers etc.
     url(r'^$', index_view, {}, name='index'),
 
-    # 動作確認用に追加
-    url(r'^trying/', apiTest_book),
-
-    url(r'^test-list/', BookList.as_view()),
-    url(r'^test-detail/', BookDetail.as_view()),
+    # include() 関数は他の URLconf への参照することができます。
+    #  Django が include() に遭遇すると、そのポイントまでに一致した URL の部分を切り落とし、
+    # 次の処理のために残りの文字列をインクルードされた URLconf へ渡します。
+    # https://docs.djangoproject.com/ja/2.0/intro/tutorial01/
+    url(r'yorimiti/', include('yorimiti.urls')),
 ]
 
 # let django built-in server serve static and media content
