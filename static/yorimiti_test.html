@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load rest_framework %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+	<!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">-->
+	<!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">-->
+	<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+		<p id="msg">カテゴリを選択してください。
+		</p>
+		<form action="{% url 'yorimiti' %}" method="POST">
+			<p id="item">
+			<div id="select-box">
+			<select name="movie">
+				<option value="movie">映画</option>
+				<option value="rental">レンタル</option>
+				<option value="theater">映画館</option>
+			</select>
+			&nbsp
+			&nbsp
+				<select name="gurume">
+				<option value="grume">グルメ</option>
+				<option value="chuka">中華</option>
+				<option value="yosyoku">洋食</option>
+				<option value="wasyoku">和食</option>
+				<option value="ramen">ラーメン</option>
+			</select>
+			</p>
+			<p id="item">
+			<select name="sports">
+				<option value="sports">スポーツ</option>
+				<option value="tennis">テニス</option>
+				<option value="table tennis">卓球</option>
+				<option value="running">ランニング</option>
+				<option value="swimming">水泳</option>
+			</select>
+			&nbsp
+			&nbsp
+			<select name="book">
+				<option value="book">本</option>
+				<option value="book store">書店</option>
+				<option value="library">図書館</option>
+			</select>
+			</div>
+			</p>
+			<p id="item">
+			{% csrf_token %}
+ 			<!--{% render_form serializer %}-->
+			<button id ="button1" type="submit" value="検索" />検索</button>
+			</p>
+		</form>
+		<p id="item2">
+		<div>
+			<iframe id="map" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12960.123504527164!2d139.5759149422973!3d35.700857797611306!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6018ee47f6226cc3%3A0x34e6b69989d52a4e!2z5ZCJ56Wl5a-66aeF!5e0!3m2!1sja!2sjp!4v1525140676813" frameborder="0" allowfullscreen></iframe>
+			</iframe>
+		</div>
+		</p>
+		<table border="brwsr1">
+			<Tr>
+				<Th id="th1">No.</Th>
+				<Th id="th2">店舗・施設</Th>
+			</Tr>
+			<Tr>
+				<Td id="td1">1</Td>
+				<Td id="td2"><a href="sample.html" title="">井の頭　恩腸公園</a></Td>
+			</Tr>
+			<Tr>
+				<Td id="td1">2</Td>
+				<Td id="td2"><a href="sample.html" title="">鎌田公園</a></Td>
+			</Tr>
+		</table>
+		<br>
+		<div id="footer">
+			<p id="copyright">Copyright (c) training_scrum Inc. All Rights Reserved.</p>
+		</div>
+</body>
+</html>

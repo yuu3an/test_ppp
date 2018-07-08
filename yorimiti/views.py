@@ -5,7 +5,7 @@ from django.template.response import TemplateResponse
 from rest_framework_mongoengine.viewsets import ModelViewSet as MongoModelViewSet
 
 from app.serializers import *
-from app.models import Tool, Book, Author
+from app.models import Tool, Book, Author, Movie
 
 
 def index_view(request):
@@ -39,3 +39,10 @@ class AuthorViewSet(MongoModelViewSet):
 
     def get_queryset(self):
         return Author.objects.all()
+
+class MovieViewSet(MongoModelViewSet):
+    lookup_field = 'id'
+    serializer_class = MovieSerializer
+
+    def get_queryset(self):
+        return Movie.objects.all()

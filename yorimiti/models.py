@@ -10,6 +10,11 @@ class Book(Document):
     author = fields.ReferenceField(Author, dbref=True)
 
 
+class Movie(Document):
+    title = fields.StringField()
+    person = fields.ListField()
+
+
 class ToolInput(EmbeddedDocument):
     id = fields.StringField(required=True)
     type = fields.ListField(fields.DynamicField(null=True))
