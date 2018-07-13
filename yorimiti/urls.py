@@ -13,5 +13,5 @@ urlpatterns = [
     url(r'^top/', top_view.as_view(), name='top'),
     # ?P<対象カラム>でそのあとの正規表現を紐づけている模様
     url(r'^search/(?P<sub_category_name>[ぁ-んァ-ヴー－]+)/$', YorimitiViewSet.as_view({'get': 'retrieve'}), name='search'),
-    url(r'^list/', YorimitiViewSet.as_view({'get': 'list'}), name='list'),
+    url(r'^radio_search/(?P<category_name>[ぁ-んァ-ヴー－]+)', RadioViewSet.as_view({'get': 'list'}), name='list'),
 ]

@@ -56,3 +56,10 @@ class YorimitiViewSet(MongoModelViewSet):
 
     def get_queryset(self):
         return M_Category.objects.all()
+
+class RadioViewSet(MongoModelViewSet):
+    lookup_field = 'category_name'
+    serializer_class = MCategorySerializer
+
+    def get_queryset(self):
+        return M_Category.objects.all()

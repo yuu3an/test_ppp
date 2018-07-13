@@ -11,13 +11,13 @@
 	<link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <!--<script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.11.0.min.js"></script>-->
     <script type="text/javascript" src="https://raw.githubusercontent.com/juniskw/django_tools/master/csrf_token_ajax.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
 		<h1>サンプル画面</h1>
 		<p id="msg">カテゴリを選択してください。
 		</p>
-		<form id="surprise_fm" action="search" method="GET">
+		<form id="surprise_fm" action="" method="GET">
 			<div id="select-box">
 				<select id="sports" name="hoge">
 				  <option>{{ m_category.0.category_name }}</option>
@@ -34,6 +34,13 @@
 		<br/>
 		API取得結果(category_name): <input type="text" id="result" value=""><br>
 		<button id ="retrieve" style="background-color: #66FFAA;"/>GET API</button>
+		<br/>
+		<br/>
+		<form id="radio_form" action="search" method="GET">
+			<input type="radio" id="radio" name="example" value="スポーツ">スポーツ
+    	</form>
+		API取得結果(category_name): <input type="text" id="result2" value=""><br>
+        <button id ="button2" value="検索" />検索</button>
 		<br/>
 		<br/>
 		<div>
@@ -61,10 +68,9 @@
 		</div>
 </body>
 <script>
-<!--$('#retrieve').click(function() {-->
- 	<!--$('#result').val('成功');-->
-<!--});-->
-
+$('#retrieve').click(function() {
+ 	$('#result').val('成功');
+});
 $('#retrieve').click(function() {
 	if($('#sports').val() == 'スポーツ') {
 		$('#result').val('サブカテを選択してください');
@@ -79,6 +85,28 @@ $('#retrieve').click(function() {
         },
     });
     <!--$('#result').val('失敗');-->
+    return false;
+});
+</script>
+<script>
+<!--$('#button2').click(function() {-->
+ 	<!--$('#result').val('成功');-->
+<!--});-->
+
+$('#button2').click(function() {
+    $.ajax({
+        'url':'../radio_search/' + $('#radio').val(),
+        'type':'GET',
+        'data':{},
+        'dataType':'json',
+        'success':function(response){
+            $('#result2').val(
+            response[0].sub_category_name + ':' +
+            response[1].sub_category_name + ':' +
+            response[2].sub_category_name);
+        },
+    });
+    $('#result2').val('失敗');
     return false;
 });
 </script>
