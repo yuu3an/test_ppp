@@ -33,6 +33,8 @@ urlpatterns = [
     # 次の処理のために残りの文字列をインクルードされた URLconf へ渡します。
     # https://docs.djangoproject.com/ja/2.0/intro/tutorial01/
     url(r'yorimiti/', include('yorimiti.urls')),
+
+    url(r'sample/', include('sample.urls')),
 ]
 
 # let django built-in server serve static and media content

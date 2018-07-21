@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
 from django.template.response import TemplateResponse
 from rest_framework_mongoengine.viewsets import ModelViewSet as MongoModelViewSet
-from yorimiti.serializers import *
-from yorimiti.models import Tool, M_Category, T_User_Category
+from sample.serializers import *
+from sample.models import Tool, M_Category, T_User_Category
 
 
 def index_view(request):
@@ -29,7 +29,7 @@ from rest_framework.views import APIView
 # トップページを表示させる際に使用する
 class top_view(APIView):
     renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'yorimiti_test.html'
+    template_name = 'sample_screen.html'
 
     def get(self, request):
         m_category = M_Category.objects.all()
@@ -50,18 +50,16 @@ class TUserCategoryViewSet(MongoModelViewSet):
     def get_queryset(self):
         return T_User_Category.objects.all()
 
-
-from rest_framework.decorators import  detail_route
-
 class YorimitiViewSet(MongoModelViewSet):
     lookup_field = 'sub_category_name'
-    queryset = M_Category.objects.all()
     serializer_class = MCategorySerializer
 
-    @detail_route()
-    def search(self, request, *args, **kwargs):
-        print(args[0])
-        mCategory = M_Category.objects.all().filter(category_id=args[0])
-        serializer = self.get_serializer(mCategory, many=True)
-        return Response(serializer.data)
+    def get_queryset(self):
+        return M_Category.objects.all()
 
+class RadioViewSet(MongoModelViewSet):
+    lookup_field = 'category_name'
+    serializer_class = MCategorySerializer
+
+    def get_queryset(self):
+        return M_Category.objects.all()

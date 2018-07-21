@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>ひま粒See</title>
 	<!-- CSS読み込み -->
 	<!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">-->
 	<!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">-->
@@ -14,40 +14,24 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-		<h1>サンプル画面</h1>
+		<h1>ひま粒See</h1>
 		<p id="msg">カテゴリを選択してください。
 		</p>
-		<form id="surprise_fm" action="" method="GET">
-			<div id="select-box">
-				<select id="sports" name="hoge">
-				  <option>{{ m_category.0.category_name }}</option>
-				  <!-- jinja2を利用してループさせる -->
-			  	  {% for object in m_category %}
-      					  <option>{{ object.sub_category_name }}</option>
-    				{% endfor %}
-				</select>
-			</div>
+		<form id="radio_item" action="radio.php" method="post">
+			<input type="radio" name="radio_item" value="1" id="movie">映画
+			<input type="radio" name="radio_item" value="2" id="gourmet">グルメ
+			<input type="radio" name="radio_item" value="3" id="sport">スポーツ
+			<input type="radio" name="radio_item" value="4" id="book">本
+			</form>
 			<br/>
 			{% csrf_token %}
-        	<button id ="button1" value="検索" />検索</button>
+        	<button id ="search_btn" value="検索" />検索</button>
     	</form>
 		<br/>
-		API取得結果(category_name): <input type="text" id="result" value=""><br>
-		<button id ="retrieve" style="background-color: #66FFAA;"/>GET API</button>
+		<h2>API取得結果</h2>
+		<input type="text" id="result" value=""><br>
 		<br/>
 		<br/>
-		<form id="radio_form" action="search" method="GET">
-			<input type="radio" id="radio" name="example" value="スポーツ">スポーツ
-    	</form>
-		API取得結果(category_name): <input type="text" id="result2" value=""><br>
-        <button id ="button2" value="検索" />検索</button>
-		<br/>
-		<br/>
-		<div>
-			<iframe id="map" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12960.123504527164!2d139.5759149422973!3d35.700857797611306!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6018ee47f6226cc3%3A0x34e6b69989d52a4e!2z5ZCJ56Wl5a-66aeF!5e0!3m2!1sja!2sjp!4v1525140676813" frameborder="0" allowfullscreen></iframe>
-			</iframe>
-		</div>
-		</p>
 		<table border="brwsr1">
 			<Tr>
 				<Th id="th1">No.</Th>
@@ -68,45 +52,30 @@
 		</div>
 </body>
 <script>
-$('#retrieve').click(function() {
- 	$('#result').val('成功');
-});
-$('#retrieve').click(function() {
-	if($('#sports').val() == 'スポーツ') {
-		$('#result').val('サブカテを選択してください');
-  	}
+<!--$('#search_btn').click(function() {-->
+ 	<!--$('#result').val('成功');-->
+<!--});-->
+<!--$('#search_btn').click(function() {-->
+ 	<!--$('#result').val($("input[name='radio_item']:checked").val());-->
+<!--});-->
+$('#search_btn').click(function() {
     $.ajax({
-        'url':'../search/' + $('#sports').val(),
+        'url':'../api/' + $("input[name='radio_item']:checked").val() + '/search/',
         'type':'GET',
         'data':{},
         'dataType':'json',
         'success':function(response){
-            $('#result').val(response.category_name);
+        $('#result').val(
+              response[0].sub_category_name + ':' +
+          	  response[1].sub_category_name + ':' +
+          	  response[2].sub_category_name
+        	  <!--obj = $.map(response, function(val, key){-->
+  			  	<!--return (val + ': ' + key);-->
+			  <!--});-->
+			);
         },
     });
     <!--$('#result').val('失敗');-->
-    return false;
-});
-</script>
-<script>
-<!--$('#button2').click(function() {-->
- 	<!--$('#result').val('成功');-->
-<!--});-->
-
-$('#button2').click(function() {
-    $.ajax({
-        'url':'../radio_search/' + $('#radio').val(),
-        'type':'GET',
-        'data':{},
-        'dataType':'json',
-        'success':function(response){
-            $('#result2').val(
-            response[0].sub_category_name + ':' +
-            response[1].sub_category_name + ':' +
-            response[2].sub_category_name);
-        },
-    });
-    $('#result2').val('失敗');
     return false;
 });
 </script>
