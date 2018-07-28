@@ -4,12 +4,12 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 from users.views import *
-from yorimiti.views import *
+from yorimichi.views import *
 
-from project.routers import HybridRouter
+from common.routers import HybridRouter
 
 
-# We use a single global DRF Router that routes views from all apps in project
+# We use a single global DRF Router that routes views from all apps in common
 router = HybridRouter()
 
 # app views and viewsets
@@ -29,11 +29,14 @@ urlpatterns = [
     url(r'^$', index_view, {}, name='index'),
 
     # include() 関数は他の URLconf への参照することができます。
-    #  Django が include() に遭遇すると、そのポイントまでに一致した URL の部分を切り落とし、
+    # Django が include() に遭遇すると、そのポイントまでに一致した URL の部分を切り落とし、
     # 次の処理のために残りの文字列をインクルードされた URLconf へ渡します。
     # https://docs.djangoproject.com/ja/2.0/intro/tutorial01/
-    url(r'yorimiti/', include('yorimiti.urls')),
 
+    # yorimichiプロジェクトへ
+    url(r'yorimichi/', include('yorimichi.urls')),
+
+    # sampleプロジェクトへ
     url(r'sample/', include('sample.urls')),
 ]
 

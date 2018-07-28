@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework_mongoengine import serializers as mongoserializers
 
-from yorimiti.models import Tool, M_Category, T_User_Category
+from yorimichi.models import Tool, M_Category, T_User_Category
 
 
 class ToolSerializer(mongoserializers.DocumentSerializer):

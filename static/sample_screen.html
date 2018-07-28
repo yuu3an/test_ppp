@@ -15,12 +15,11 @@
 </head>
 <body>
 		<h1>サンプル画面</h1>
-		<p id="msg">カテゴリを選択してください。
-		</p>
+		jinja2を利用してサブカテゴリー名のプルダウンを作成
 		<form id="surprise_fm" action="" method="GET">
 			<div id="select-box">
 				<select id="sports" name="hoge">
-				  <option>{{ m_category.0.category_name }}</option>
+				  <!--<option>{{ m_category.0.category_name }}</option>-->
 				  <!-- jinja2を利用してループさせる -->
 			  	  {% for object in m_category %}
       					  <option>{{ object.sub_category_name }}</option>
@@ -28,11 +27,9 @@
 				</select>
 			</div>
 			<br/>
-			{% csrf_token %}
-        	<button id ="button1" value="検索" />検索</button>
     	</form>
 		<br/>
-		API取得結果(category_name): <input type="text" id="result" value=""><br>
+		API取得結果<br>(プルダウン選択肢のカテゴリー名を表示): <input type="text" id="result" value=""><br>
 		<button id ="retrieve" style="background-color: #66FFAA;"/>GET API</button>
 		<br/>
 		<br/>
