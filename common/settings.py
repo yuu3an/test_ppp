@@ -97,7 +97,8 @@ DATABASES = {
 # We define 2 Mongo databases - default and trying
 MONGODB_DATABASES = {
     "default": {
-        "name": "common",
+        # "name": "common",
+        "name": "project",
         "host": "localhost",
         "port": 27017,
         "tz_aware": True,  # if you use timezones in django (USE_TZ = True)
