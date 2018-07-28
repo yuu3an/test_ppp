@@ -174,7 +174,7 @@ class User(Document):
             from django.conf import settings
             if not getattr(settings, 'AUTH_PROFILE_MODULE', False):
                 raise auth.SiteProfileNotAvailable('You need to set AUTH_PROFILE_MO'
-                                              'DULE in your project settings')
+                                              'DULE in your common settings')
             try:
                 app_label, model_name = settings.AUTH_PROFILE_MODULE.split('.')
             except ValueError:
@@ -186,7 +186,7 @@ class User(Document):
                 model = models.get_model(app_label, model_name)
                 if model is None:
                     raise auth.SiteProfileNotAvailable('Unable to load the profile '
-                        'model, check AUTH_PROFILE_MODULE in your project sett'
+                        'model, check AUTH_PROFILE_MODULE in your common sett'
                         'ings')
                 self._profile_cache = model._default_manager.using(self._state.db).get(user__id__exact=self.id)
                 self._profile_cache.user = self
