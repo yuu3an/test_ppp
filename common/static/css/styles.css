@@ -141,6 +141,12 @@ Td#td2 {
 	border-style: solid;
 	border-width: medium;
 }
+
+#sample {
+    width: 700px;
+    height: 400px;
+}
+
 /*-------------------------------------*/
 /* フッター */
 /*-------------------------------------*/
@@ -156,3 +162,32 @@ div#footer p#copyright{
 	font-family:"lucida grande", tahoma, verdana, arial, sans-serif!important;
 }
 
+/**************************************************
+
+	Google Maps
+
+**************************************************/
+.map-wrapper
+{
+	max-width: 100% ;
+	padding-bottom: 75% ;
+	position: relative ;
+	top: 0 ;
+	left: 500 ;
+	height: 0 ;
+	overflow: hidden ;
+}
+
+.map-wrapper > div
+{
+	position: absolute ;
+	top: 0 ;
+	left: 500 ;
+	width: 50% ;
+	height: 50%
+}
+
+.map-wrapper img
+{
+	max-width: none ;
+}
