@@ -10,16 +10,21 @@
 	<!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">-->
 	<link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <!--<script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.11.0.min.js"></script>-->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGkTT-OCucXTF5kLkOKTTFKeCC4ljEExE&libraries=places"></script>
     <script type="text/javascript" src="https://raw.githubusercontent.com/juniskw/django_tools/master/csrf_token_ajax.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="{% static 'js/sample.js' %}"></script>
 </head>
 <body>
-		<h1>サンプル画面</h1>
-		jinja2を利用してサブカテゴリー名のプルダウンを作成
+		<h1>サンプル画面
+		</h1>
+
+		<p id="msg">さとしん
+		</p>
 		<form id="surprise_fm" action="" method="GET">
 			<div id="select-box">
 				<select id="sports" name="hoge">
-				  <!--<option>{{ m_category.0.category_name }}</option>-->
+				  <option>{{ m_category.0.category_name }}</option>
 				  <!-- jinja2を利用してループさせる -->
 			  	  {% for object in m_category %}
       					  <option>{{ object.sub_category_name }}</option>
@@ -27,24 +32,27 @@
 				</select>
 			</div>
 			<br/>
+			{% csrf_token %}
+        	<input type="button" size="55" value="検索" onClick="SearchGo()" />
     	</form>
 		<br/>
-		API取得結果<br>(プルダウン選択肢のカテゴリー名を表示): <input type="text" id="result" value=""><br>
-		<button id ="retrieve" style="background-color: #66FFAA;"/>GET API</button>
+		API取得結果(category_name): <input type="text" id="result" value=""><br>
+		<button id ="retrieve" style="background-color: #66FFAA;" onClick="GetAPI()"/>GET API</button>
 		<br/>
 		<br/>
 		<form id="radio_form" action="search" method="GET">
 			<input type="radio" id="radio" name="example" value="スポーツ">スポーツ
     	</form>
-		API取得結果(category_name): <input type="text" id="result2" value=""><br>
-        <button id ="button2" value="検索" />検索</button>
+		API取得結果(category_name): <input type="text" id="searchGoBox" value=""><br>
+        <button id ="button2" value="検索" onClick="SearchSubCategory()" />検索</button>
 		<br/>
 		<br/>
-		<div>
-			<iframe id="map" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12960.123504527164!2d139.5759149422973!3d35.700857797611306!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6018ee47f6226cc3%3A0x34e6b69989d52a4e!2z5ZCJ56Wl5a-66aeF!5e0!3m2!1sja!2sjp!4v1525140676813" frameborder="0" allowfullscreen></iframe>
-			</iframe>
-		</div>
 		</p>
+		<!-- 地図表示させる -->
+		<div class="map-wrapper">
+			<div id="map-canvas"></div>
+		</div>
+
 		<table border="brwsr1">
 			<Tr>
 				<Th id="th1">No.</Th>
@@ -64,47 +72,5 @@
 			<p id="copyright">Copyright (c) training_scrum Inc. All Rights Reserved.</p>
 		</div>
 </body>
-<script>
-$('#retrieve').click(function() {
- 	$('#result').val('成功');
-});
-$('#retrieve').click(function() {
-	if($('#sports').val() == 'スポーツ') {
-		$('#result').val('サブカテを選択してください');
-  	}
-    $.ajax({
-        'url':'../search/' + $('#sports').val(),
-        'type':'GET',
-        'data':{},
-        'dataType':'json',
-        'success':function(response){
-            $('#result').val(response.category_name);
-        },
-    });
-    <!--$('#result').val('失敗');-->
-    return false;
-});
-</script>
-<script>
-<!--$('#button2').click(function() {-->
- 	<!--$('#result').val('成功');-->
-<!--});-->
 
-$('#button2').click(function() {
-    $.ajax({
-        'url':'../radio_search/' + $('#radio').val(),
-        'type':'GET',
-        'data':{},
-        'dataType':'json',
-        'success':function(response){
-            $('#result2').val(
-            response[0].sub_category_name + ':' +
-            response[1].sub_category_name + ':' +
-            response[2].sub_category_name);
-        },
-    });
-    $('#result2').val('失敗');
-    return false;
-});
-</script>
 </html>
